@@ -19,4 +19,14 @@ nest generate module features/todo
 
 產生 Service <SERVICE_NAME>
 nest generate service features/todo
+
+產生 Filter <FILTER_NAME>
+nest generate filter filters/http
+
+產生 Pipe <PIPE_NAME>
+nest generate pipe pipes/parse-int
+
+安裝 Pipe 相關套件
+npm install --save class-validator class-transformer
+npm install --save @nestjs/mapped-types
 ```

@@ -1,22 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { TodoController } from './features/todo/todo.controller';
-import { TodoModule } from './features/todo/todo.module';
-import { CopyTodoModule } from './features/copy-todo/copy-todo.module';
-import { CommonModule } from './modules/common/common.module';
-import { MessageModule } from './modules/message/message.module';
-import { APP_FILTER } from '@nestjs/core';
-import { HttpFilter } from './filters/http/http.filter';
+
 import { AppService } from './app.service';
+import { BookModule } from './features/book/book.module';
+import { BookController } from './features/book/book.controller';
+import { APP_PIPE } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
 @Module({
-  imports: [TodoModule, CopyTodoModule, CommonModule, MessageModule],
-  controllers: [AppController, TodoController],
+  imports: [BookModule],
+  controllers: [AppController, BookController],
   providers: [
     AppService,
     {
-      provide: APP_FILTER,
-      useClass: HttpFilter,
+      provide: APP_PIPE,
+      // useClass: ValidationPipe,
+      useFactory: () => new ValidationPipe({ whitelist: true }),
     },
   ],
 })
