@@ -29,4 +29,7 @@ nest generate pipe pipes/parse-int
 安裝 Pipe 相關套件
 npm install --save class-validator class-transformer
 npm install --save @nestjs/mapped-types
+
+產生 Class Middleware <MIDDLEWARE_NAME>
+nest generate middleware middlewares/logger
 ```
