@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ResponseInterceptor } from './interceptors/response/response.interceptor';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 @Module({
   controllers: [AppController],
   providers: [
     AppService,
     {
-      provide: APP_INTERCEPTOR,
-      useClass: ResponseInterceptor,
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
   ],
 })
