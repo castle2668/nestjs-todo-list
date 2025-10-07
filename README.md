@@ -32,4 +32,7 @@ npm install --save @nestjs/mapped-types
 
 產生 Class Middleware <MIDDLEWARE_NAME>
 nest generate middleware middlewares/logger
+
+產生 Interceptor <INTERCEPTOR_NAME>
+nest generate interceptor interceptors/response
 ```
