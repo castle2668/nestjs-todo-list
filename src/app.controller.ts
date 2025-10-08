@@ -1,15 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { User } from './decorators/user/user.decorator';
-import { Authorization } from './decorators/authorization/authorization.decorator';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+    console.log(AppController.name, Math.random());
+  }
 
-  @Authorization('admin', 'staff')
   @Get()
-  getHello(@User('name') user: any): string {
-    return user;
+  getHello(): string {
+    return this.appService.getHello();
   }
 }
