@@ -1,6 +1,6 @@
 # Maple Shop Backend
 
-## 相關指令
+## Nest CLI 相關指令
 
 ```bash
 安裝
@@ -35,4 +35,10 @@ nest generate middleware middlewares/logger
 
 產生 Interceptor <INTERCEPTOR_NAME>
 nest generate interceptor interceptors/response
+
+產生 Guard <GUARD_NAME>
+nest generate guard guards/auth
+
+產生 Decorator <DECORATOR_NAME>
+nest generate decorator decorators/roles
 ```

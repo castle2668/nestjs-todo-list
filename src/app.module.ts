@@ -1,18 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './guards/auth/auth.guard';
+import { MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { MockDataMiddleware } from './middlewares/mock-data/mock-data.middleware';
 
 @Module({
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(MockDataMiddleware).forRoutes('*');
+  }
+}
