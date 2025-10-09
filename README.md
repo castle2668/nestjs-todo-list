@@ -41,4 +41,7 @@ nest generate guard guards/auth
 
 產生 Decorator <DECORATOR_NAME>
 nest generate decorator decorators/roles
+
+安裝 Configuration 套件
+npm install @nestjs/config
 ```
