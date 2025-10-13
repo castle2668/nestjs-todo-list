@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
-import { Todo } from './models/todo.model';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class TodoService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly eventEmitter: EventEmitter2) {}
 
-  public getTodos() {
-    return this.httpService.get<Todo[]>('/todos');
+  public createTodo(dto: any) {
+    // 送資料給其他服務
+    this.eventEmitter.emit('todo.created', dto);
+    // 回傳資料
+    return dto;
   }
 }

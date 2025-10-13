@@ -2,25 +2,11 @@ import { Module } from '@nestjs/common';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config';
-import { ConfigService } from '@nestjs/config';
+import { TodoListener } from './listener/todo.listenser';
 
 @Module({
-  imports: [
-    HttpModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        const timeout = configService.get('AXIOS_TIMEOUT');
-        const url = configService.get('API_URL');
-        return {
-          timeout: parseInt(timeout),
-          baseURL: url,
-        };
-      },
-    }),
-  ],
+  imports: [HttpModule],
   controllers: [TodoController],
-  providers: [TodoService],
+  providers: [TodoService, TodoListener],
 })
 export class TodoModule {}

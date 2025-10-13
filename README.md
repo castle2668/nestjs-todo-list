@@ -33,6 +33,9 @@ npm install @types/multer -D
 
 # 安裝 Axios 套件
 npm install @nestjs/axios
+
+# 安裝 EventEmitter2 套件
+npm install @nestjs/event-emitter
 ```
 
 ## 常用 Nest CLI 指令

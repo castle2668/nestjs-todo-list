@@ -1,13 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { map } from 'rxjs';
+import { Body } from '@nestjs/common';
 
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
-  @Get()
-  getTodos() {
-    return this.todoService.getTodos().pipe(map((data) => data));
+  @Post()
+  createTodo(@Body() dto: any) {
+    return this.todoService.createTodo(dto);
   }
 }
