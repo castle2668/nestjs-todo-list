@@ -19,6 +19,10 @@ npm run start:dev
 - @nestjs/config
 - @types/multer
 - @nestjs/axios
+- @nestjs/event-emitter
+- @nestjs/mongoose、mongoose
+- flat
+- @types/flat
 
 ```bash
 # 安裝 Pipe 相關套件
@@ -36,6 +40,13 @@ npm install @nestjs/axios
 
 # 安裝 EventEmitter2 套件
 npm install @nestjs/event-emitter
+
+# 安裝 Mongoose 套件
+npm install @nestjs/mongoose mongoose
+
+# 安裝 Flat 套件
+npm install flat
+npm install @types/flat -D
 ```
 
 ## 常用 Nest CLI 指令
