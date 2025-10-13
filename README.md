@@ -1,6 +1,6 @@
 # NestJS Practice
 
-## 初始化
+## 建立專案
 
 ```bash
 # 安裝
@@ -12,7 +12,13 @@ nest new nestjs-practice
 npm run start:dev
 ```
 
-## 相關套件
+## 常用套件
+
+- class-validator、class-transformer
+- @nestjs/mapped-types
+- @nestjs/config
+- @types/multer
+- @nestjs/axios
 
 ```bash
 # 安裝 Pipe 相關套件
@@ -24,9 +30,12 @@ npm install @nestjs/config
 
 # 安裝 File Upload 定義檔
 npm install @types/multer -D
+
+# 安裝 Axios 套件
+npm install @nestjs/axios
 ```
 
-## Nest CLI 指令
+## 常用 Nest CLI 指令
 
 ```bash
 # 產生 Controller <CONTROLLER_NAME>
