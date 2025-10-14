@@ -15,12 +15,13 @@ import { AuthorizationModule } from './modules/authorization/authorization.modul
 import { TodoModule } from './features/todo/todo.module';
 import secretConfig from './configs/secret.config';
 import { join } from 'path';
+import adminConfig from './configs/admin.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig, secretConfig],
+      load: [databaseConfig, secretConfig, adminConfig],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
