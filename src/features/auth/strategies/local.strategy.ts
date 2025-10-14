@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { AuthService } from '../auth.service';
+import { IUserPayload } from '../models/payload.model';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -16,8 +17,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Invalid username or password');
     }
 
-    const { _id: id } = user;
+    const payload: IUserPayload = {
+      id: user._id.toString(),
+      username: user.username,
+      role: user.role,
+    };
 
-    return { id, username };
+    return payload;
   }
 }

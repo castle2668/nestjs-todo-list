@@ -1,36 +1,17 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
-import { UserService } from '../user/user.service';
-import { ForbiddenException } from '@nestjs/common';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from './auth.service';
+import { Controller, Post, UseGuards } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { IUserPayload } from './models/payload.model';
+import { UserPayload } from './decorators/payload.decorator';
+import { LocalGuard } from 'src/common/guards';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly userService: UserService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly jwtService: JwtService) {}
 
-  // 註冊
-  @Post('signup')
-  async signup(@Body() dto: CreateUserDto) {
-    const { username, email } = dto;
-    const isExists = await this.userService.userExists(username, email);
-
-    if (isExists) {
-      throw new ForbiddenException('Username or email already exists');
-    }
-
-    const user = await this.userService.createUser(dto);
-    const { _id: id } = user;
-    return this.authService.generateJwt({ id: id.toString(), username });
-  }
-
-  // 登入
-  @UseGuards(AuthGuard('local'))
+  // 登入 API
+  @UseGuards(LocalGuard)
   @Post('signin')
-  async signin(@Request() request: any) {
-    return this.authService.generateJwt(request.user);
+  async signin(@UserPayload() payload: IUserPayload) {
+    return this.jwtService.sign(payload);
   }
 }
