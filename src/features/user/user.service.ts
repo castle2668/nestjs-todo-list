@@ -1,17 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
-import { User, UserDocument } from '../../models/user.model';
+import { Model } from 'mongoose';
+import { User, UserDocument } from '../../core/models/user';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { flatten } from 'flat';
 import * as bcrypt from 'bcrypt';
+import { Role } from '../../core/models/user';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnApplicationBootstrap {
   constructor(
+    private readonly configService: ConfigService,
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
+
+  public async onApplicationBootstrap() {
+    await this.createDefaultAdmin();
+  }
 
   // 建立使用者
   public async createUser(dto: CreateUserDto) {
@@ -20,25 +25,22 @@ export class UserService {
     return this.userModel.create({ ...dto, password: hash });
   }
 
-  // 檢查用戶是否存在
-  public userExists(username: string, email: string) {
-    return this.userModel.exists({ $or: [{ username }, { email }] });
-  }
-
-  // 查詢使用者
-  public getUser(filter: FilterQuery<UserDocument>) {
-    return this.userModel.findOne(filter);
-  }
-
-  // 更新
-  public updateUser(id: string, dto: UpdateUserDto) {
-    const obj = flatten(dto);
-    console.log(obj);
-    return this.userModel.findByIdAndUpdate(id, { $set: obj }, { new: true });
-  }
-
-  // 刪除
-  public removeUser(id: string) {
-    return this.userModel.findByIdAndDelete(id).exec();
+  private async createDefaultAdmin() {
+    const { username, password, email } = this.configService.get('admin');
+    const dto: CreateUserDto = {
+      username,
+      password,
+      email,
+      role: Role.ADMIN,
+    };
+    const exist = await this.userModel
+      .exists({
+        $and: [{ username }, { role: Role.ADMIN }],
+      })
+      .exec();
+    if (exist) {
+      return;
+    }
+    await this.createUser(dto);
   }
 }
