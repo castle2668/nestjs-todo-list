@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
 
-export default registerAs('mongo', () => {
+export default registerAs('database', () => {
   const username = process.env.MONGO_USERNAME;
   const password = encodeURIComponent(process.env.MONGO_PASSWORD);
   const resource = process.env.MONGO_RESOURCE;

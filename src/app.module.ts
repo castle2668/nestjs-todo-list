@@ -6,8 +6,7 @@ import databaseConfig from './configs/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from './features/user/user.module';
-import { APP_PIPE } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { GLOBAL_VALIDATION_PIPE } from './common/providers';
 import { AuthModule } from './features/auth/auth.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { TodoModule } from './features/todo/todo.module';
@@ -24,7 +23,7 @@ import { join } from 'path';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get('mongo.uri'),
+        uri: configService.get('database.uri'),
       }),
     }),
     AuthorizationModule.register({
@@ -37,17 +36,6 @@ import { join } from 'path';
     TodoModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    {
-      provide: APP_PIPE,
-      useFactory: () => {
-        return new ValidationPipe({
-          whitelist: true,
-          transform: true,
-        });
-      },
-    },
-  ],
+  providers: [AppService, GLOBAL_VALIDATION_PIPE],
 })
 export class AppModule {}
