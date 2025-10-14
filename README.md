@@ -14,22 +14,6 @@ npm run start:dev
 
 ## 常用套件
 
-- class-validator、class-transformer
-- @nestjs/mapped-types
-- @nestjs/config
-- @types/multer
-- @nestjs/axios
-- @nestjs/event-emitter
-- @nestjs/mongoose、mongoose
-- flat
-- @types/flat
-- passport、@nestjs/passport、passport-local
-- @types/passport-local
-- bcrpyt
-- @types/bcrpyt
-- @nestjs/jwt、passport-jwt
-- @types/passport-jwt
-
 ```bash
 # 安裝 Pipe 相關套件
 npm install --save class-validator class-transformer
@@ -65,6 +49,9 @@ npm install @types/bcrypt -D
 # 安裝 Passport JWT Strategy 套件
 npm install @nestjs/jwt passport-jwt
 npm install @types/passport-jwt -D
+
+# 安裝 Casbin 套件
+npm install casbin
 ```
 
 ## 常用 Nest CLI 指令

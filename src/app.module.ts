@@ -9,7 +9,10 @@ import { UserModule } from './features/user/user.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AuthModule } from './features/auth/auth.module';
+import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { TodoModule } from './features/todo/todo.module';
 import secretConfig from './configs/secret.config';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -24,8 +27,14 @@ import secretConfig from './configs/secret.config';
         uri: configService.get('mongo.uri'),
       }),
     }),
+    AuthorizationModule.register({
+      modelPath: join(__dirname, '../casbin/model.conf'),
+      policyAdapter: join(__dirname, '../casbin/policy.csv'),
+      isGlobal: true,
+    }),
     UserModule,
     AuthModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [

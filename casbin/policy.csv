@@ -1,0 +1,5 @@
+p, role:staff, /todos, read
+p, role:staff, /todos/*, read
+p, role:manager, /todos, create
+
+g, role:manager, role:staff
