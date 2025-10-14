@@ -1,5 +1,5 @@
 import { RoleGuard } from './role.guard';
-import { AuthorizationService } from 'src/modules/authorization';
+import { AuthorizationService } from '../modules/authorization';
 
 describe('RoleGuard', () => {
   it('should be defined', () => {

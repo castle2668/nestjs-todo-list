@@ -1,11 +1,7 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { AuthorizationService } from 'src/modules/authorization';
+import { AuthorizationService } from '../modules/authorization';
+import { IUserPayload } from 'src/features/auth/models/payload.model';
 
 @Injectable()
 export class RoleGuard implements CanActivate {
@@ -16,16 +12,12 @@ export class RoleGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = context.switchToHttp();
     const request = ctx.getRequest();
-    const { method, originalUrl, user } = request;
+    const { user, method, path } = request;
+    const { role } = user as IUserPayload;
     const action = this.authorizationService.mappingAction(method);
-
-    if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-
     return this.authorizationService.checkPermission(
-      `role:${(user as any).role}`,
-      originalUrl,
+      `role:${role}`,
+      path,
       action,
     );
   }
