@@ -1,4 +1,4 @@
-# NestJS Practice
+# NestJS Todo List
 
 ## 建立專案
 
@@ -6,6 +6,8 @@
 # 安裝
 npm install -g @nestjs/cli
 nest --help
+
+# 建立專案
 nest new nestjs-practice
 
 # 啟動

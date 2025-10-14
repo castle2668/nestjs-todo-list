@@ -1,7 +1,7 @@
 {
-  "name": "nestjs-practice",
+  "name": "nestjs-todo-list",
   "version": "0.0.1",
-  "description": "NestJS Practice",
+  "description": "NestJS Todo List",
   "author": "Sean Huang",
   "private": true,
   "license": "UNLICENSED",
