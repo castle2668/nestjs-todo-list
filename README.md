@@ -23,6 +23,10 @@ npm run start:dev
 - @nestjs/mongoose、mongoose
 - flat
 - @types/flat
+- passport、@nestjs/passport、passport-local
+- @types/passport-local
+- bcrpyt
+- @types/bcrpyt
 
 ```bash
 # 安裝 Pipe 相關套件
@@ -47,6 +51,14 @@ npm install @nestjs/mongoose mongoose
 # 安裝 Flat 套件
 npm install flat
 npm install @types/flat -D
+
+# 安裝 Passport 套件
+npm install passport @nestjs/passport passport-local
+npm install @types/passport-local -D
+
+# 安裝 bcrypt 套件
+npm install bcrypt
+npm install @types/bcrypt -D
 ```
 
 ## 常用 Nest CLI 指令

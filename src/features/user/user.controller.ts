@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-  ParseIntPipe,
-  Delete,
-} from '@nestjs/common';
+import { Body, Controller, Param, Patch, Post, Delete } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserService } from './user.service';
@@ -27,21 +17,6 @@ export class UserController {
   async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     const document = await this.userService.updateUser(id, dto);
     return document.toJSON();
-  }
-
-  @Get(':id')
-  async getUser(@Param('id') id: string) {
-    const document = await this.userService.getUser(id);
-    return document.toJSON();
-  }
-
-  @Get()
-  async getUsers(
-    @Query('limit', ParseIntPipe) limit: number,
-    @Query('skip', ParseIntPipe) skip: number,
-  ) {
-    const documents = await this.userService.getUsers(skip, limit);
-    return documents.map((doc) => doc.toJSON());
   }
 
   @Delete(':id')

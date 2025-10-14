@@ -6,6 +6,9 @@ import databaseConfig from './configs/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from './features/user/user.module';
+import { APP_PIPE } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
+import { AuthModule } from './features/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,8 +24,20 @@ import { UserModule } from './features/user/user.module';
       }),
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_PIPE,
+      useFactory: () => {
+        return new ValidationPipe({
+          whitelist: true,
+          transform: true,
+        });
+      },
+    },
+  ],
 })
 export class AppModule {}

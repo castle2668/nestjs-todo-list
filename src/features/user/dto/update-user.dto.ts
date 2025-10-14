@@ -1,8 +1,5 @@
 export class UpdateUserDto {
-  public readonly name: {
-    firstName?: string;
-    lastName?: string;
-  };
-
+  public readonly username?: string;
   public readonly email?: string;
+  public readonly password?: string;
 }
