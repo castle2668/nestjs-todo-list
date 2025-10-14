@@ -26,9 +26,29 @@ export class UserService implements OnApplicationBootstrap {
     return this.userModel.create({ ...dto, password: hash });
   }
 
+  // 查詢使用者列表
+  public async getUsers(
+    skip = 0,
+    limit = 30,
+    filters?: FilterQuery<UserDocument>,
+  ) {
+    const query = this.userModel.find(filters).skip(skip).limit(limit);
+    return query.exec();
+  }
+
   // 查詢使用者
   public async getUser(filter: FilterQuery<UserDocument>) {
     return this.userModel.findOne(filter).exec();
+  }
+
+  // 刪除使用者
+  public removeUser(id: string) {
+    return this.userModel.findByIdAndDelete(id).exec();
+  }
+
+  // 查詢使用者是否存在
+  public existUser(username: string, email: string) {
+    return this.userModel.exists({ $or: [{ username }, { email }] }).exec();
   }
 
   // 建立預設管理員
