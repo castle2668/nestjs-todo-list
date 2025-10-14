@@ -11,7 +11,7 @@ import {
   GLOBAL_RESPONSE_INTERCEPTOR,
 } from './common/providers';
 import { AuthModule } from './features/auth/auth.module';
-import { AuthorizationModule } from './modules/authorization/authorization.module';
+import { AuthorizationModule } from './common/modules/authorization';
 import { TodoModule } from './features/todo/todo.module';
 import secretConfig from './configs/secret.config';
 import { join } from 'path';
@@ -31,9 +31,9 @@ import adminConfig from './configs/admin.config';
       }),
     }),
     AuthorizationModule.register({
+      global: true,
       modelPath: join(__dirname, '../casbin/model.conf'),
       policyAdapter: join(__dirname, '../casbin/policy.csv'),
-      isGlobal: true,
     }),
     UserModule,
     AuthModule,
