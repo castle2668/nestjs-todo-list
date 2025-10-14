@@ -1,18 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+
 import { ConfigModule } from '@nestjs/config';
 import databaseConfig from './configs/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
-import { UserModule } from './features/user/user.module';
+import { UserModule } from './features/user';
 import {
   GLOBAL_VALIDATION_PIPE,
   GLOBAL_RESPONSE_INTERCEPTOR,
 } from './common/providers';
-import { AuthModule } from './features/auth/auth.module';
+import { AuthModule } from './features/auth';
 import { AuthorizationModule } from './common/modules/authorization';
-import { TodoModule } from './features/todo/todo.module';
+import { TodoModule } from './features/todo';
 import secretConfig from './configs/secret.config';
 import { join } from 'path';
 import adminConfig from './configs/admin.config';
@@ -39,7 +38,7 @@ import adminConfig from './configs/admin.config';
     AuthModule,
     TodoModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, GLOBAL_VALIDATION_PIPE, GLOBAL_RESPONSE_INTERCEPTOR],
+  controllers: [],
+  providers: [GLOBAL_VALIDATION_PIPE, GLOBAL_RESPONSE_INTERCEPTOR],
 })
 export class AppModule {}
