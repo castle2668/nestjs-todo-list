@@ -1,6 +1,6 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { User, UserDocument } from '../../core/models/user';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -14,6 +14,7 @@ export class UserService implements OnApplicationBootstrap {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
+  // 在應用程式啟動時建立預設管理員
   public async onApplicationBootstrap() {
     await this.createDefaultAdmin();
   }
@@ -25,6 +26,12 @@ export class UserService implements OnApplicationBootstrap {
     return this.userModel.create({ ...dto, password: hash });
   }
 
+  // 查詢使用者
+  public async getUser(filter: FilterQuery<UserDocument>) {
+    return this.userModel.findOne(filter).exec();
+  }
+
+  // 建立預設管理員
   private async createDefaultAdmin() {
     const { username, password, email } = this.configService.get('admin');
     const dto: CreateUserDto = {
