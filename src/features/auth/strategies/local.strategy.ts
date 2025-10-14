@@ -16,8 +16,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('Invalid username or password');
     }
 
-    const { email } = user;
+    const { _id: id } = user;
 
-    return { username, email };
+    return { id, username };
   }
 }

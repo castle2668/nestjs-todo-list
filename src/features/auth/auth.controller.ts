@@ -3,11 +3,16 @@ import { UserService } from '../user/user.service';
 import { ForbiddenException } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
+  // 註冊
   @Post('signup')
   async signup(@Body() dto: CreateUserDto) {
     const { username, email } = dto;
@@ -18,12 +23,14 @@ export class AuthController {
     }
 
     const user = await this.userService.createUser(dto);
-    return user.toJSON();
+    const { _id: id } = user;
+    return this.authService.generateJwt({ id: id.toString(), username });
   }
 
+  // 登入
   @UseGuards(AuthGuard('local'))
   @Post('signin')
   async signin(@Request() request: any) {
-    return request.user;
+    return this.authService.generateJwt(request.user);
   }
 }

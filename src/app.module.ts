@@ -9,12 +9,13 @@ import { UserModule } from './features/user/user.module';
 import { APP_PIPE } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AuthModule } from './features/auth/auth.module';
+import secretConfig from './configs/secret.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [databaseConfig],
+      load: [databaseConfig, secretConfig],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],

@@ -27,6 +27,8 @@ npm run start:dev
 - @types/passport-local
 - bcrpyt
 - @types/bcrpyt
+- @nestjs/jwt、passport-jwt
+- @types/passport-jwt
 
 ```bash
 # 安裝 Pipe 相關套件
@@ -59,6 +61,10 @@ npm install @types/passport-local -D
 # 安裝 bcrypt 套件
 npm install bcrypt
 npm install @types/bcrypt -D
+
+# 安裝 Passport JWT Strategy 套件
+npm install @nestjs/jwt passport-jwt
+npm install @types/passport-jwt -D
 ```
 
 ## 常用 Nest CLI 指令
