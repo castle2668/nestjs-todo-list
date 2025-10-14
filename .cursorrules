@@ -1,0 +1,139 @@
+# Cursor AI 規則設定
+
+## 程式碼風格與規範
+- 使用 TypeScript 和 React 最佳實踐
+- 遵循 ESLint 和 Prettier 設定
+- 使用繁體中文進行註解和說明
+- 保持程式碼整潔和可讀性
+
+## Git Commit Message 自動產生規範
+
+### Commit Message 格式
+遵循 Conventional Commits 規範，格式為：
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+### Type 類型（必須）
+- `Feat`: 新功能
+- `Fix`: 修復錯誤
+- `Docs`: 文件更新
+- `Style`: 跟 Coding Style 有關的調整，無關產品的外觀樣式
+- `Refactor`: 重構程式碼
+- `Perf`: 效能優化
+- `Test`: 測試相關
+- `Build`: 建置系統變更
+- `CI`: CI/CD 相關
+- `Chore`: 雜務（依賴更新、工具設定等）
+- `Deprecate`: 棄用功能
+- `Release`: 發布版本
+- `Revert`: 回滾變更
+
+### Scope 範圍（必須）
+- `API`: API 相關
+- `Config`: 設定檔
+- `Framework`: 框架相關
+- `Function`: 功能模組
+- `Git`: Git 相關
+- `Infra`: 基礎設施
+- `Lang`: 語言/國際化
+- `Module`: 模組
+- `Project`: 專案設定
+- `Theme`: 變更外觀風格樣式、主題
+- `Vendor`: 第三方套件
+- `Views`: 視圖/頁面
+
+### Subject 規範
+- 使用句子格式（sentence-case）
+- 不得為空
+- **Header 總長度最長 72 字元**（包含 type、scope、冒號、空格和 subject）
+- 描述變更的簡潔摘要
+
+### Body 規範（可選）
+- 每行條列式以數字開頭，結尾以 "." 並符合格式 "1. xxxx."
+- Body 前需空一行
+- 詳細說明變更內容
+
+### Footer 規範（可選）
+- Footer 前需空一行
+- 最長 100 字元
+- 包含 BREAKING CHANGE 或相關 issue 引用
+
+### 重大變更規範
+- 重大變更的 Header 中必須包含驚嘆號 "!"
+- Footer 中必須包含 "BREAKING CHANGE:"
+
+### 自動產生 Commit Message 範例
+
+#### 新功能
+```
+Feat(Views): Add weather card component
+
+1. Implement weather data display function.
+2. Add temperature, humidity, wind speed, etc.
+3. Support real-time weather update.
+```
+
+#### 修復錯誤
+```
+Fix(API): Fix user authentication issue
+
+1. Fix JWT token verification logic.
+2. Improve error handling mechanism.
+3. Update authentication status management.
+```
+
+#### 重構
+```
+Refactor(Function): Refactor data processing logic
+
+1. Extract shared data processing functions.
+2. Improve code readability.
+3. Optimize performance.
+```
+
+#### 重大變更
+```
+Feat!(API): Refactor user API interface
+
+1. Change user data structure.
+2. Update all related endpoints.
+3. Remove old API support.
+
+BREAKING CHANGE: User API response format has changed, please update the frontend code
+```
+
+## 自動產生規則
+當 AI 協助產生 commit message 時，應：
+1. 使用英文
+2. 分析變更的檔案和內容
+3. 判斷適當的 type 和 scope，不能超出規定的種類和範圍
+4. 撰寫簡潔明確的 subject
+5. **MANDATORY: Header 總長度必須嚴格控制在 72 字元以內**
+6. **MANDATORY: 生成 commit message 前必須先計算字元數**
+7. **MANDATORY: 如果超過 72 字元，必須縮短 subject 內容**
+8. 如需要，提供詳細的 body 說明
+9. 遵循所有格式規範
+10. 確保符合 commitlint 驗證規則
+
+### Header 長度計算範例
+- `Feat(Function): Add component` = 30 字元 ✅
+- `Feat(Function): Add ThinkingDots component for loading state in ChatMessage` = 75 字元 ❌
+- `Feat(Function): Add ThinkingDots component for loading` = 55 字元 ✅
+
+### 強制約束條件
+- **絕對禁止**生成超過 72 字元的 header
+- **絕對禁止**生成超過 100 字元的 body
+- **必須**在生成前計算字元數
+- **必須**使用簡潔的 subject，避免冗長描述
+- **優先**使用簡短但清晰的詞彙
+
+## 專案特定規範
+- 優先使用繁體中文進行說明
+- 考慮能源管理系統的業務邏輯
+- 注意 React/Next.js 最佳實踐
+- 保持 TypeScript 型別安全
