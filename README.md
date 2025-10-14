@@ -52,6 +52,9 @@ npm install @types/passport-jwt -D
 
 # 安裝 Casbin 套件
 npm install casbin
+
+# 安裝 Swagger 套件
+npm install @nestjs/swagger swagger-ui-express
 ```
 
 ## 常用 Nest CLI 指令
