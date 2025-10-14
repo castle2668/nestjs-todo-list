@@ -1,37 +1,24 @@
-import { TodoPriority } from '../types/todo.type';
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  TODO_TITLE_MAX_LENGTH,
+  TODO_TITLE_MIN_LENGTH,
+} from '../../../core/models/todo/todo.const';
+import { IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { TODO_DESCRIPTION_MAX_LENGTH } from '../../../core/models/todo/todo.const';
+import { IsBoolean, IsOptional } from 'class-validator';
 
 export class CreateTodoDto {
-  @ApiProperty({
-    maxLength: 20,
-    description: 'The title of the todo',
-  })
+  @MinLength(TODO_TITLE_MIN_LENGTH)
+  @MaxLength(TODO_TITLE_MAX_LENGTH)
   public readonly title: string;
 
-  @ApiProperty({
-    required: false,
-    maxLength: 200,
-    description: 'The description of the todo',
-  })
+  @IsOptional()
+  @MaxLength(TODO_DESCRIPTION_MAX_LENGTH)
   public readonly description?: string;
 
-  @ApiProperty({
-    required: false,
-    description: 'The completed status of the todo',
-  })
+  @IsOptional()
+  @IsBoolean()
   public readonly completed?: boolean;
 
-  @ApiProperty({
-    required: false,
-    type: [String],
-    description: 'The tags of the todo',
-  })
-  public readonly tags?: string[];
-
-  @ApiProperty({
-    enum: TodoPriority,
-    enumName: 'TodoPriority',
-    description: 'The priority of the todo',
-  })
-  public readonly priority: TodoPriority;
+  @IsNotEmpty()
+  public readonly assignee: string;
 }
