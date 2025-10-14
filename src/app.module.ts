@@ -6,7 +6,10 @@ import databaseConfig from './configs/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService } from '@nestjs/config';
 import { UserModule } from './features/user/user.module';
-import { GLOBAL_VALIDATION_PIPE } from './common/providers';
+import {
+  GLOBAL_VALIDATION_PIPE,
+  GLOBAL_RESPONSE_INTERCEPTOR,
+} from './common/providers';
 import { AuthModule } from './features/auth/auth.module';
 import { AuthorizationModule } from './modules/authorization/authorization.module';
 import { TodoModule } from './features/todo/todo.module';
@@ -36,6 +39,6 @@ import { join } from 'path';
     TodoModule,
   ],
   controllers: [AppController],
-  providers: [AppService, GLOBAL_VALIDATION_PIPE],
+  providers: [AppService, GLOBAL_VALIDATION_PIPE, GLOBAL_RESPONSE_INTERCEPTOR],
 })
 export class AppModule {}
