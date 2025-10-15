@@ -89,3 +89,29 @@ nest generate guard guards/auth
 # 產生 Decorator <DECORATOR_NAME>
 nest generate decorator decorators/roles
 ```
+
+## 資料夾結構
+
+```bash
+.
+├─ .env
+├─ src
+|  ├─ common/
+|  ├─ configs/
+|  ├─ core/
+|  ├─ features/
+|  ├─ app.module.ts
+|  └─ main.ts
+└─ rbac
+   ├─ model.conf
+   └─ policy.csv
+```
+
+- `.env`：環境變數配置檔。
+- `src/common`：放一些共用的項目，如：`constants`、`enums`、`models` 等。
+- `src/configs`：放環境變數相關的工廠函式。
+- `src/core`：放一些與應用程式本身較有直接關聯的元件，如：`guards`、`interceptors`、`pipes` 等。
+- `src/features`：主要功能放在這裡，像是這次會用到的 `user`、`todo`、`auth` 等。
+- `src/app.module.ts`：根模組。
+- `src/main.ts`：載入點。
+- `rbac`：放置 Casbin 使用到的 `model` 與 `policy`。
