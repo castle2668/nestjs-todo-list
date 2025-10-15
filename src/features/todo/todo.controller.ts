@@ -14,13 +14,23 @@ import { RoleGuard } from '../../common/guards';
 import { TodoService } from './todo.service';
 import { CreateTodoDto } from './dto/create.todo.dto';
 import { UpdateTodoDto } from './dto/update.todo.dto';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Todo')
+@ApiBearerAuth()
 @UseGuards(JwtGuard, RoleGuard)
 @Controller('todos')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
 
   // 建立待辦事項
+  @ApiCreatedResponse({ description: '建立待辦事項成功' })
   @Post()
   async createTodo(@Body() dto: CreateTodoDto) {
     const todo = await this.todoService.createTodo(dto);
@@ -28,6 +38,9 @@ export class TodoController {
   }
 
   // 查詢待辦事項列表
+  @ApiOkResponse({ description: '查詢待辦事項列表成功' })
+  @ApiQuery({ name: 'skip', required: false })
+  @ApiQuery({ name: 'limit', required: false })
   @Get()
   async getTodos(@Query() skip: number, @Query() limit: number) {
     const documents = await this.todoService.getTodos(skip, limit);
@@ -36,6 +49,7 @@ export class TodoController {
   }
 
   // 查詢待辦事項
+  @ApiOkResponse({ description: '查詢待辦事項成功' })
   @Get(':id')
   async getTodo(@Param('id') id: string) {
     const todo = await this.todoService.getTodoById(id);
@@ -43,6 +57,7 @@ export class TodoController {
   }
 
   // 更新待辦事項
+  @ApiOkResponse({ description: '更新待辦事項成功' })
   @Patch(':id')
   async updateTodo(@Param('id') id: string, @Body() dto: UpdateTodoDto) {
     const todo = await this.todoService.updateTodo(id, dto);
@@ -50,6 +65,7 @@ export class TodoController {
   }
 
   // 刪除待辦事項
+  @ApiOkResponse({ description: '刪除待辦事項成功' })
   @Delete(':id')
   async removeTodo(@Param('id') id: string) {
     await this.todoService.removeTodo(id);
