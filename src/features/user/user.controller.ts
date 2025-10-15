@@ -12,13 +12,23 @@ import {
 import { JwtGuard, RoleGuard } from '../../common/guards';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('User')
+@ApiBearerAuth()
+@UseGuards(JwtGuard, RoleGuard)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   // 建立使用者
-  @UseGuards(JwtGuard, RoleGuard)
+  @ApiCreatedResponse({ description: '建立使用者成功' })
   @Post()
   async createUser(@Body() dto: CreateUserDto) {
     const { username, email } = dto;
@@ -38,7 +48,9 @@ export class UserController {
   }
 
   // 查詢使用者列表
-  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({ description: '查詢使用者列表成功' })
+  @ApiQuery({ name: 'skip', required: false })
+  @ApiQuery({ name: 'limit', required: false })
   @Get()
   async getUsers(@Query() skip: number, @Query() limit: number) {
     const document = await this.userService.getUsers(skip, limit);
@@ -51,7 +63,7 @@ export class UserController {
   }
 
   // 刪除使用者
-  @UseGuards(JwtGuard, RoleGuard)
+  @ApiOkResponse({ description: '刪除使用者成功' })
   @Delete(':id')
   async removeUser(@Param('id') id: string) {
     await this.userService.removeUser(id);
